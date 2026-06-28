@@ -37,6 +37,7 @@ task.spawn(function()
         sound:Destroy()
     end)
 end)
+
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Parent = game:GetService("CoreGui")
 ScreenGui.ResetOnSpawn = false
