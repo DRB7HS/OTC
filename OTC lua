@@ -22,7 +22,7 @@ task.spawn(function()
         if not isfile(soundPath) then
             writefile(
                 soundPath,
-                game:HttpGet("https://files.catbox.moe/5a9cjr.mp3")
+                game:HttpGet("https://files.catbox.moe/t66l1a.mp3")
             )
         end
 
