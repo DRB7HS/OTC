@@ -32,7 +32,7 @@ task.spawn(function()
         sound.Parent = game:GetService("SoundService")
 
         sound:Play()
-        task.wait(13)
+        task.wait(15)
         sound:Stop()
         sound:Destroy()
     end)
