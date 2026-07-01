@@ -61,7 +61,7 @@ local BackgroundImage = Instance.new("ImageLabel")
 BackgroundImage.Name = "BackgroundImage"
 BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
 BackgroundImage.BackgroundTransparency = 1
-BackgroundImage.Image = "rbxthumb://type=Asset&w=420&h=420&id=92711879389010"
+BackgroundImage.Image = "rbxassetid://132521748589897"
 BackgroundImage.ImageTransparency = 0.6
 BackgroundImage.Parent = MainFrame
 
@@ -129,7 +129,7 @@ RightIconFrame.Name = "RightIconFrame"
 RightIconFrame.Size = UDim2.new(0, 25, 0, 25)
 RightIconFrame.Position = UDim2.new(1, -33, 0, 8)
 RightIconFrame.BackgroundTransparency = 1
-RightIconFrame.Image = "rbxthumb://type=Asset&w=420&h=420&id=92711879389010"
+RightIconFrame.Image = "rbxassetid://132521748589897"
 RightIconFrame.ImageTransparency = 0.3
 RightIconFrame.Parent = MainFrame
 
@@ -143,7 +143,7 @@ LeftButtonsFrame.Name = "LeftButtonsFrame"
 LeftButtonsFrame.Size = UDim2.new(0, 55, 0, 25)
 LeftButtonsFrame.Position = UDim2.new(0, 8, 0, 8)
 LeftButtonsFrame.BackgroundTransparency = 1
-LeftButtonsFrame.Image = "rbxthumb://type=Asset&w=420&h=420&id=92711879389010"
+LeftButtonsFrame.Image = "rbxassetid://132521748589897"
 LeftButtonsFrame.ImageTransparency = 0.5
 LeftButtonsFrame.Parent = MainFrame
 
