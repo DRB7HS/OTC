@@ -1,0 +1,391 @@
+local TweenService = game:GetService("TweenService")
+local SoundService = game:GetService("SoundService")
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+
+task.spawn(function()
+    pcall(function()
+        local folder = "7zen_Sounds"
+        local fileName = "sounds.mp3"
+        local soundPath = folder .. "/" .. fileName
+
+        local assetFunc = getsynasset or getcustomasset
+
+        if not assetFunc then
+            warn("Executor does not support custom assets")
+            return
+        end
+
+        if not isfolder(folder) then
+            makefolder(folder)
+        end
+
+        if not isfile(soundPath) then
+            writefile(
+                soundPath,
+                game:HttpGet("https://files.catbox.moe/f90o1t.mp3")
+            )
+        end
+
+        local sound = Instance.new("Sound")
+        sound.SoundId = assetFunc(soundPath)
+        sound.Volume = 5
+        sound.Parent = game:GetService("SoundService")
+
+        sound:Play()
+        task.wait(10)
+        sound:Stop()
+        sound:Destroy()
+    end)
+end)
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ResetOnSpawn = false
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 180, 0, 180)
+MainFrame.Position = UDim2.new(1, -200, 0, 50)
+MainFrame.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
+MainFrame.BackgroundTransparency = 0.15
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = MainFrame
+
+local BackgroundImage = Instance.new("ImageLabel")
+BackgroundImage.Name = "BackgroundImage"
+BackgroundImage.Size = UDim2.new(1, 0, 1, 0)
+BackgroundImage.BackgroundTransparency = 1
+BackgroundImage.Image = "rbxthumb://type=Asset&w=420&h=420&id=92711879389010"
+BackgroundImage.ImageTransparency = 0.6
+BackgroundImage.Parent = MainFrame
+
+local BackgroundCorner = UICorner:Clone()
+BackgroundCorner.Parent = BackgroundImage
+
+local function CreateAnimatedStroke(Object)
+    local Stroke = Instance.new("UIStroke")
+    Stroke.Parent = Object
+    Stroke.Color = Color3.fromRGB(255,255,255)
+    Stroke.Thickness = 3
+    Stroke.Transparency = 0
+    Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+    Stroke.LineJoinMode = Enum.LineJoinMode.Round
+
+    local Gradient = Instance.new("UIGradient")
+    Gradient.Parent = Stroke
+    Gradient.Rotation = 0
+
+    Gradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(10,10,10)),
+        ColorSequenceKeypoint.new(0.15, Color3.fromRGB(30,30,30)),
+        ColorSequenceKeypoint.new(0.35, Color3.fromRGB(255,255,255)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,255,255)),
+        ColorSequenceKeypoint.new(0.65, Color3.fromRGB(255,255,255)),
+        ColorSequenceKeypoint.new(0.85, Color3.fromRGB(30,30,30)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(10,10,10))
+    }
+
+    local AnimationInfo = TweenInfo.new(7, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1)
+    local Track = TweenService:Create(Gradient, AnimationInfo, {Rotation = 360})
+    Track:Play()
+end
+
+CreateAnimatedStroke(MainFrame)
+
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.Size = UDim2.new(1, 0, 0, 30)
+Title.Position = UDim2.new(0, 0, 0, 5)
+Title.BackgroundTransparency = 1
+Title.Text = "     Ragdoll"
+Title.TextColor3 = Color3.fromRGB(30, 30, 30)
+Title.TextSize = 14
+Title.Font = Enum.Font.GothamBold
+Title.Parent = MainFrame
+
+local StarEmoji = Instance.new("TextLabel")
+StarEmoji.Name = "StarEmoji"
+StarEmoji.Size = UDim2.new(0, 50, 0, 50)
+StarEmoji.Position = UDim2.new(0.5, -25, 0.5, -10)
+StarEmoji.BackgroundTransparency = 1
+StarEmoji.Text = ""
+StarEmoji.TextSize = 35
+StarEmoji.AnchorPoint = Vector2.new(0.5, 0.5)
+StarEmoji.Position = UDim2.new(0.5, 0, 0.5, 10)
+StarEmoji.Parent = MainFrame
+
+local StarInfo = TweenInfo.new(3, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1)
+TweenService:Create(StarEmoji, StarInfo, {Rotation = 360}):Play()
+
+local RightIconFrame = Instance.new("ImageLabel")
+RightIconFrame.Name = "RightIconFrame"
+RightIconFrame.Size = UDim2.new(0, 25, 0, 25)
+RightIconFrame.Position = UDim2.new(1, -33, 0, 8)
+RightIconFrame.BackgroundTransparency = 1
+RightIconFrame.Image = "rbxthumb://type=Asset&w=420&h=420&id=92711879389010"
+RightIconFrame.ImageTransparency = 0.3
+RightIconFrame.Parent = MainFrame
+
+local ContainerCorner = Instance.new("UICorner")
+ContainerCorner.CornerRadius = UDim.new(0, 6)
+ContainerCorner.Parent = RightIconFrame
+CreateAnimatedStroke(RightIconFrame)
+
+local LeftButtonsFrame = Instance.new("ImageLabel")
+LeftButtonsFrame.Name = "LeftButtonsFrame"
+LeftButtonsFrame.Size = UDim2.new(0, 55, 0, 25)
+LeftButtonsFrame.Position = UDim2.new(0, 8, 0, 8)
+LeftButtonsFrame.BackgroundTransparency = 1
+LeftButtonsFrame.Image = "rbxthumb://type=Asset&w=420&h=420&id=92711879389010"
+LeftButtonsFrame.ImageTransparency = 0.5
+LeftButtonsFrame.Parent = MainFrame
+
+local ButtonsCorner = Instance.new("UICorner")
+ButtonsCorner.CornerRadius = UDim.new(0, 6)
+ButtonsCorner.Parent = LeftButtonsFrame
+CreateAnimatedStroke(LeftButtonsFrame)
+
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Name = "CloseBtn"
+CloseBtn.Size = UDim2.new(0, 20, 0, 20)
+CloseBtn.Position = UDim2.new(0, 4, 0, 2.5)
+CloseBtn.BackgroundTransparency = 1
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(30, 30, 30)
+CloseBtn.TextSize = 12
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.Parent = LeftButtonsFrame
+
+local ToggleBtn = Instance.new("TextButton")
+ToggleBtn.Name = "ToggleBtn"
+ToggleBtn.Size = UDim2.new(0, 20, 0, 20)
+ToggleBtn.Position = UDim2.new(0, 28, 0, 2.5)
+ToggleBtn.BackgroundTransparency = 1
+ToggleBtn.Text = "-"
+ToggleBtn.TextColor3 = Color3.fromRGB(30, 30, 30)
+ToggleBtn.TextSize = 14
+ToggleBtn.Font = Enum.Font.GothamBold
+ToggleBtn.Parent = LeftButtonsFrame
+
+local OpenSound = Instance.new("Sound")
+OpenSound.SoundId = "rbxassetid://9114223193"
+OpenSound.Volume = 1
+OpenSound.Parent = SoundService
+OpenSound:Play()
+
+local ContentContainer = Instance.new("Frame")
+ContentContainer.Name = "ContentContainer"
+ContentContainer.Size = UDim2.new(1, -16, 1, -50)
+ContentContainer.Position = UDim2.new(0, 8, 0, 42)
+ContentContainer.BackgroundTransparency = 1
+ContentContainer.Parent = MainFrame
+
+local AntiRagdollButton = Instance.new("Frame")
+AntiRagdollButton.Name = "AntiRagdollButton"
+AntiRagdollButton.Size = UDim2.new(1, 0, 0, 32)
+AntiRagdollButton.Position = UDim2.new(0, 0, 0, 0)
+AntiRagdollButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AntiRagdollButton.BackgroundTransparency = 0.5
+AntiRagdollButton.BorderSizePixel = 0
+AntiRagdollButton.Parent = ContentContainer
+
+local AntiRagdollCorner = Instance.new("UICorner")
+AntiRagdollCorner.CornerRadius = UDim.new(0, 6)
+AntiRagdollCorner.Parent = AntiRagdollButton
+CreateAnimatedStroke(AntiRagdollButton)
+
+local AntiRagdollLabel = Instance.new("TextLabel")
+AntiRagdollLabel.Name = "Label"
+AntiRagdollLabel.Size = UDim2.new(1, -45, 1, 0)
+AntiRagdollLabel.Position = UDim2.new(0, 8, 0, 0)
+AntiRagdollLabel.BackgroundTransparency = 1
+AntiRagdollLabel.Text = "Anti Ragdoll"
+AntiRagdollLabel.TextColor3 = Color3.fromRGB(30, 30, 30)
+AntiRagdollLabel.TextSize = 11
+AntiRagdollLabel.Font = Enum.Font.GothamBold
+AntiRagdollLabel.TextXAlignment = Enum.TextXAlignment.Left
+AntiRagdollLabel.Parent = AntiRagdollButton
+
+local AntiRagdollToggleFrame = Instance.new("Frame")
+AntiRagdollToggleFrame.Name = "ToggleFrame"
+AntiRagdollToggleFrame.Size = UDim2.new(0, 30, 0, 16)
+AntiRagdollToggleFrame.Position = UDim2.new(1, -35, 0.5, -8)
+AntiRagdollToggleFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AntiRagdollToggleFrame.BorderSizePixel = 0
+AntiRagdollToggleFrame.Parent = AntiRagdollButton
+
+local ToggleFrameCorner1 = Instance.new("UICorner")
+ToggleFrameCorner1.CornerRadius = UDim.new(1, 0)
+ToggleFrameCorner1.Parent = AntiRagdollToggleFrame
+
+local AntiRagdollToggleCircle = Instance.new("Frame")
+AntiRagdollToggleCircle.Name = "Circle"
+AntiRagdollToggleCircle.Size = UDim2.new(0, 12, 0, 12)
+AntiRagdollToggleCircle.Position = UDim2.new(0, 2, 0.5, -6)
+AntiRagdollToggleCircle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AntiRagdollToggleCircle.BorderSizePixel = 0
+AntiRagdollToggleCircle.Parent = AntiRagdollToggleFrame
+
+local ToggleCircleCorner1 = Instance.new("UICorner")
+ToggleCircleCorner1.CornerRadius = UDim.new(1, 0)
+ToggleCircleCorner1.Parent = AntiRagdollToggleCircle
+
+local AntiRagdollClickBtn = Instance.new("TextButton")
+AntiRagdollClickBtn.Name = "ClickBtn"
+AntiRagdollClickBtn.Size = UDim2.new(1, 0, 1, 0)
+AntiRagdollClickBtn.BackgroundTransparency = 1
+AntiRagdollClickBtn.Text = ""
+AntiRagdollClickBtn.Parent = AntiRagdollButton
+
+local AntiRagdollEnabled = false
+
+AntiRagdollClickBtn.MouseButton1Click:Connect(function()
+    AntiRagdollEnabled = not AntiRagdollEnabled
+    if AntiRagdollEnabled then
+        TweenService:Create(AntiRagdollToggleFrame, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+        TweenService:Create(AntiRagdollToggleCircle, TweenInfo.new(0.2), {
+            Position = UDim2.new(1, -14, 0.5, -6),
+            BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        }):Play()
+    else
+        TweenService:Create(AntiRagdollToggleFrame, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
+        TweenService:Create(AntiRagdollToggleCircle, TweenInfo.new(0.2), {
+            Position = UDim2.new(0, 2, 0.5, -6),
+            BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        }):Play()
+    end
+end)
+
+RunService.Stepped:Connect(function()
+    local char = LocalPlayer.Character
+    if char then
+        local hum = char:FindFirstChildOfClass("Humanoid")
+        if hum and AntiRagdollEnabled then
+            if hum:GetState() == Enum.HumanoidStateType.Physics or hum:GetState() == Enum.HumanoidStateType.Ragdoll then
+                hum:ChangeState(Enum.HumanoidStateType.GettingUp)
+            end
+        end
+    end
+end)
+
+local AntiFlingButton = Instance.new("Frame")
+AntiFlingButton.Name = "AntiFlingButton"
+AntiFlingButton.Size = UDim2.new(1, 0, 0, 32)
+AntiFlingButton.Position = UDim2.new(0, 0, 0, 38)
+AntiFlingButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AntiFlingButton.BackgroundTransparency = 0.5
+AntiFlingButton.BorderSizePixel = 0
+AntiFlingButton.Parent = ContentContainer
+
+local AntiFlingCorner = Instance.new("UICorner")
+AntiFlingCorner.CornerRadius = UDim.new(0, 6)
+AntiFlingCorner.Parent = AntiFlingButton
+CreateAnimatedStroke(AntiFlingButton)
+
+local AntiFlingLabel = Instance.new("TextLabel")
+AntiFlingLabel.Name = "Label"
+AntiFlingLabel.Size = UDim2.new(1, -45, 1, 0)
+AntiFlingLabel.Position = UDim2.new(0, 8, 0, 0)
+AntiFlingLabel.BackgroundTransparency = 1
+AntiFlingLabel.Text = "Anti Push / Anti fling"
+AntiFlingLabel.TextColor3 = Color3.fromRGB(30, 30, 30)
+AntiFlingLabel.TextSize = 10
+AntiFlingLabel.Font = Enum.Font.GothamBold
+AntiFlingLabel.TextXAlignment = Enum.TextXAlignment.Left
+AntiFlingLabel.Parent = AntiFlingButton
+
+local AntiFlingToggleFrame = Instance.new("Frame")
+AntiFlingToggleFrame.Name = "ToggleFrame"
+AntiFlingToggleFrame.Size = UDim2.new(0, 30, 0, 16)
+AntiFlingToggleFrame.Position = UDim2.new(1, -35, 0.5, -8)
+AntiFlingToggleFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+AntiFlingToggleFrame.BorderSizePixel = 0
+AntiFlingToggleFrame.Parent = AntiFlingButton
+
+local ToggleFrameCorner2 = Instance.new("UICorner")
+ToggleFrameCorner2.CornerRadius = UDim.new(1, 0)
+ToggleFrameCorner2.Parent = AntiFlingToggleFrame
+
+local AntiFlingToggleCircle = Instance.new("Frame")
+AntiFlingToggleCircle.Name = "Circle"
+AntiFlingToggleCircle.Size = UDim2.new(0, 12, 0, 12)
+AntiFlingToggleCircle.Position = UDim2.new(0, 2, 0.5, -6)
+AntiFlingToggleCircle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AntiFlingToggleCircle.BorderSizePixel = 0
+AntiFlingToggleCircle.Parent = AntiFlingToggleFrame
+
+local ToggleCircleCorner2 = Instance.new("UICorner")
+ToggleCircleCorner2.CornerRadius = UDim.new(1, 0)
+ToggleCircleCorner2.Parent = AntiFlingToggleCircle
+
+local AntiFlingClickBtn = Instance.new("TextButton")
+AntiFlingClickBtn.Name = "ClickBtn"
+AntiFlingClickBtn.Size = UDim2.new(1, 0, 1, 0)
+AntiFlingClickBtn.BackgroundTransparency = 1
+AntiFlingClickBtn.Text = ""
+AntiFlingClickBtn.Parent = AntiFlingButton
+
+local AntiFlingEnabled = false
+
+AntiFlingClickBtn.MouseButton1Click:Connect(function()
+    AntiFlingEnabled = not AntiFlingEnabled
+    if AntiFlingEnabled then
+        TweenService:Create(AntiFlingToggleFrame, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+        TweenService:Create(AntiFlingToggleCircle, TweenInfo.new(0.2), {
+            Position = UDim2.new(1, -14, 0.5, -6),
+            BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        }):Play()
+    else
+        TweenService:Create(AntiFlingToggleFrame, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(0, 0, 0)}):Play()
+        TweenService:Create(AntiFlingToggleCircle, TweenInfo.new(0.2), {
+            Position = UDim2.new(0, 2, 0.5, -6),
+            BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        }):Play()
+    end
+end)
+
+RunService.Stepped:Connect(function()
+    if AntiFlingEnabled then
+        for _, player in ipairs(Players:GetPlayers()) do
+            if player ~= LocalPlayer and player.Character then
+                for _, part in ipairs(player.Character:GetChildren()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = false
+                    end
+                end
+            end
+        end
+    end
+end)
+
+local IsMinimized = false
+ToggleBtn.MouseButton1Click:Connect(function()
+    if not IsMinimized then
+        IsMinimized = true
+        ToggleBtn.Text = "+"
+        TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 180, 0, 40)}):Play()
+        BackgroundImage.Visible = false
+        StarEmoji.Visible = false
+        ContentContainer.Visible = false
+    else
+        IsMinimized = false
+        ToggleBtn.Text = "-"
+        TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2.new(0, 180, 0, 180)}):Play()
+        BackgroundImage.Visible = true
+        StarEmoji.Visible = true
+        ContentContainer.Visible = true
+    end
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
